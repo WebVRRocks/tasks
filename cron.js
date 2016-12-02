@@ -71,7 +71,7 @@ var init = module.exports.init = function () {
       tasks.airtable_webvr_scenes.options
     );
 
-    // removeCompletedTask(queue, task);
+    removeCompletedTask(queue, task);
 
     return task;
   };
@@ -79,7 +79,7 @@ var init = module.exports.init = function () {
   startJobAirtableWebVRScenes();
 
   // Remove failed jobs after 1 day.
-  // removeFailedJobs(queue, '1d');
+  removeFailedJobs(queue, '1d');
 };
 
 var stop = module.exports.stop = function (queue) {
