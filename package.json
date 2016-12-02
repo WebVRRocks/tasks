@@ -1,0 +1,33 @@
+{
+  "name": "webvrrocks-tasks",
+  "description": "Scheduled (cron) tasks for WebVR Rocks.",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "main": "./cron.js",
+  "dependencies": {
+    "airtable": "^0.4.3",
+    "concurrent-transform": "^1.0.0",
+    "firequeue": "^2.2.11",
+    "mkdirp": "^0.5.1",
+    "request-promise": "^4.1.1",
+    "semistandard": "^9.1.0",
+    "stream-util": "^4.0.4",
+    "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "shx": "^0.2.1"
+  },
+  "engines": {
+    "node": ">=0.6.0",
+    "npm": ">=3.0.0"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "NODE_ENVIRONMENT='development' node ./cron",
+    "prod": "NODE_ENVIRONMENT='production' node ./cron",
+    "lint": "semistandard",
+    "clean": "shx rm -rf logs"
+  }
+}
