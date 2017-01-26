@@ -8,6 +8,9 @@ var request = require('request-promise');
 var logger = require('../logger')(__filename);
 
 var settings = module.exports.settings = {
+  database: {
+    dir: process.argv[2] || path.join(__dirname, '..')
+  },
   airtable: {
     appId: 'app08C2f6KbFHvaAA',
     bearerToken: 'keyMJq1gSRuwMTZ8r'
@@ -79,7 +82,7 @@ module.exports.run = function (opts) {
 
       var hash = md5(records);
 
-      var tablePath = path.resolve(__dirname, '..', 'data', tableName + '.json');
+      var tablePath = path.resolve(opts.dir || settings.database.dir, 'data', tableName + '.json');
       var tablePathRelative = path.relative('..', tablePath);
 
       logger.info('Table "%s" has hash "%s"', tableName, hash);
