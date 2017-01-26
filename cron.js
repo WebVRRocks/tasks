@@ -20,6 +20,30 @@ var TASK_DATA = {
       params: {
         pageSize: 100
       }
+    },
+    {
+      name: 'people',
+      params: {
+        pageSize: 100
+      }
+    },
+    {
+      name: 'external_articles',
+      params: {
+        pageSize: 100
+      }
+    },
+    {
+      name: 'events',
+      params: {
+        pageSize: 100
+      }
+    },
+    {
+      name: 'bugs',
+      params: {
+        pageSize: 100
+      }
     }
   ]
 };
