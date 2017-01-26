@@ -16,25 +16,13 @@ var TASK_DATA = {
       }
     },
     {
-      name: 'compat_reports',
-      params: {
-        pageSize: 100
-      }
-    },
-    {
       name: 'people',
       params: {
         pageSize: 100
       }
     },
     {
-      name: 'external_articles',
-      params: {
-        pageSize: 100
-      }
-    },
-    {
-      name: 'events',
+      name: 'compat_reports',
       params: {
         pageSize: 100
       }
@@ -44,7 +32,19 @@ var TASK_DATA = {
       params: {
         pageSize: 100
       }
-    }
+    },
+    // {
+    //   name: 'external_articles',
+    //   params: {
+    //     pageSize: 100
+    //   }
+    // },
+    // {
+    //   name: 'events',
+    //   params: {
+    //     pageSize: 100
+    //   }
+    // },
   ]
 };
 
