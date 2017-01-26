@@ -14,6 +14,12 @@ var TASK_DATA = {
       params: {
         pageSize: 100
       }
+    },
+    {
+      name: 'compat_reports',
+      params: {
+        pageSize: 100
+      }
     }
   ]
 };
