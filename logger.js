@@ -3,7 +3,7 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 var winston = require('winston');
 
-var PROD = process.env.NODE_ENVIRONMENT === 'production';
+var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = function (filename) {
   var relativePath = path.relative(__dirname, filename);

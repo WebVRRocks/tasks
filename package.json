@@ -27,8 +27,8 @@
   "engineStrict": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "NODE_ENVIRONMENT='development' node ./cron",
-    "prod": "NODE_ENVIRONMENT='production' node ./cron",
+    "dev": "NODE_ENV='development' node ./cron",
+    "prod": "NODE_ENV='production' node ./cron",
     "lint": "semistandard",
     "clean": "shx rm -rf logs"
   }
