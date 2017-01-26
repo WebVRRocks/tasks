@@ -5,7 +5,7 @@
   "private": true,
   "license": "MIT",
   "main": "./cron.js",
-  "bin": "webvrrocks-tasks",
+  "bin": "webvrrockstasks",
   "dependencies": {
     "airtable": "^0.4.3",
     "concurrent-transform": "^1.0.0",
