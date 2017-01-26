@@ -123,8 +123,8 @@ var init = module.exports.init = function () {
     startAirtableWebVRRocksJob(opts);
   });
 
-  // Remove failed jobs after 1 day.
-  removeFailedJobs(queue, '30s');
+  // Remove failed jobs after 1 hour.
+  removeFailedJobs(queue, '1h');
 };
 
 module.exports.stop = function (queue) {
