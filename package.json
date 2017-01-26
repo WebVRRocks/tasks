@@ -1,7 +1,7 @@
 {
   "name": "webvrrocks-tasks",
   "description": "Scheduled (cron) tasks for WebVR Rocks.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "main": "./cron.js",
   "bin": {
