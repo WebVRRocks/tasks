@@ -26,11 +26,15 @@ module.exports = function (filename) {
     }
   });
 
-  winston.handleExceptions(
+  winston.handleExceptions([
+    new winston.transports.Console({
+      handleExceptions: true,
+      json: true
+    }),
     new winston.transports.File({
       filename: exceptionLogsOutputPath
     })
-  );
+  ]);
 
   return winston.loggers.get(name);
 };

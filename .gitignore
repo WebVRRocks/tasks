@@ -1,5 +1,6 @@
 .DS_Store
 .travis.config.tgz
+data/
 logs/
 node_modules/
 npm-debug*.log*

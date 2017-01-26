@@ -1,13 +1,22 @@
 'use strict';
 
-var path = require('path');
-
 var concurrentTransform = require('concurrent-transform');
 var firequeue = require('firequeue');
 var streamUtil = require('stream-util');
 
 var logger = require('./logger')(__filename);
 var tasks = require('./tasks/');
+
+var TASK_DATA = {
+  airtable_webvr_rocks: [
+    {
+      name: 'webvr_scenes',
+      params: {
+        pageSize: 100
+      }
+    }
+  ]
+};
 
 if (firequeue.default) {
   firequeue = firequeue.default;
@@ -22,6 +31,7 @@ var loggerStream = function (fn) {
 
 var init = module.exports.init = function () {
   var queue = firequeue.init('https://webvr-6345b.firebaseio.com/webvrrocks/queue');
+  var taskNums = {};
 
   // Start queue engine.
   queue.start().pipe(
@@ -33,12 +43,14 @@ var init = module.exports.init = function () {
     })
   );
 
-  var taskNum = {
-    airtable_webvr_scenes: 0
-  };
-
-  var startJobAirtableWebVRScenes = function (delay) {
-    var taskName = 'tasks:airtable:webvr_scenes:' + taskNum.airtable_webvr_scenes++;
+  var startAirtableWebVRRocksJob = function (opts, delay) {
+    if (!('airtable_webvr_rocks' in taskNums)) {
+      taskNums.airtable_webvr_rocks = {};
+    }
+    if (!(opts.name in taskNums.airtable_webvr_rocks)) {
+      taskNums.airtable_webvr_rocks[opts.name] = 0;
+    }
+    var taskName = 'tasks:airtable:webvr_rocks:' + taskNums.airtable_webvr_rocks[opts.name]++;
 
     delay = delay || '0s';
 
@@ -46,9 +58,9 @@ var init = module.exports.init = function () {
     var jobAirtableWebVRScenes = queue.jobs.push({
       task: taskName,
       data: {
-        name: 'airtable:webvr_scenes',
+        name: 'airtable:webvr_rocks',
         source: 'airtable',
-        sheet: 'webvr_scenes'
+        sheet: opts.name
       },
       delayed: delay
     });
@@ -58,8 +70,9 @@ var init = module.exports.init = function () {
         var state = s.val();
         logger.verbose('Job changed state: ' + state);
         if (state === 'completed') {
-          return startJobAirtableWebVRScenes(
-            tasks.airtable_webvr_scenes.options.interval
+          return startAirtableWebVRRocksJob(
+            opts,
+            tasks.airtable_webvr_rocks.options.interval
           );
         }
       });
@@ -67,8 +80,8 @@ var init = module.exports.init = function () {
     var task = processTask(
       queue,
       taskName,
-      tasks.airtable_webvr_scenes.run,
-      tasks.airtable_webvr_scenes.options
+      tasks.airtable_webvr_rocks.run(opts),
+      tasks.airtable_webvr_rocks.options
     );
 
     removeCompletedTask(queue, task);
@@ -76,13 +89,15 @@ var init = module.exports.init = function () {
     return task;
   };
 
-  startJobAirtableWebVRScenes();
+  TASK_DATA.airtable_webvr_rocks.forEach(function (opts) {
+    startAirtableWebVRRocksJob(opts);
+  });
 
   // Remove failed jobs after 1 day.
-  removeFailedJobs(queue, '1d');
+  removeFailedJobs(queue, '30s');
 };
 
-var stop = module.exports.stop = function (queue) {
+module.exports.stop = function (queue) {
   return queue.stop().then(function () {
     logger.info('Queue stopped');
   });
@@ -144,4 +159,6 @@ var removeFailedJobs = module.exports.removeFailedJobs = function (queue, timesp
     });
 };
 
-init();
+if (require.main === module) {
+  init();
+}

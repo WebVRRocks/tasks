@@ -1,3 +1,3 @@
 module.exports = {
-  airtable_webvr_scenes: require('./airtable_webvr_scenes')
+  airtable_webvr_rocks: require('./airtable_webvr_rocks')
 };
